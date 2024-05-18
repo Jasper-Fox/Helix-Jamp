@@ -1,9 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mime;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Tap : MonoBehaviour
@@ -19,25 +14,20 @@ public class Tap : MonoBehaviour
     public Button MenuButton;
     public Button PlayButton;
     public Image NextLavelColor;
-    
+
     private Active _active;
     private Vector3 _startPosition;
 
     void Start()
     {
-        _active = Ball.GetComponent<Active>(); //верём ссылку на компонент актив у мячика
-
+        AddLinks();
         _active.ChangedKinematic(true); //делаем его статичным
 
         _startPosition = _active._startPosition; //запоминаем начальную позицию мячика
 
-        MenuButton.onClick.AddListener(_klickMenuButton); //некий синтаксис для нажатия по меню
+        OnClickFunctions();
 
-        PlayButton.onClick.AddListener(_klickPlayButton); //некий синтаксис для нажатия по кнопке плей
-
-        WinLayout.gameObject.SetActive(false); //отключаем все лэйауты
-        LoseLayout.gameObject.SetActive(false);
-        MenuButton.gameObject.SetActive(false);
+        DisablingLayouts();
 
         NextLavelColor.color = G_ray; //устанавливаем кружечек левелбара в серый
     }
@@ -65,7 +55,7 @@ public class Tap : MonoBehaviour
         _active._newRecordBool = false;
 
         _active._wasFinish = false;
-        
+
         MenuButton.gameObject.SetActive(false);
     }
 
@@ -86,11 +76,11 @@ public class Tap : MonoBehaviour
             NextLavelColor.color = O_range;
 
             _active._levelNumber++;
-            
+
             _active._maxPassedPlatforms = 0;
 
             _active._finish = false;
-            
+
             _active.ChangedKinematic(true);
         }
     }
@@ -108,8 +98,30 @@ public class Tap : MonoBehaviour
         }
     }
 
-    private void _porcessBarValue() //значение полосочки сверху
+    private void _porcessBarValue()//значение полосочки сверху
     {
-        ProcessBar.value = 1 - Ball.transform.position.y / _startPosition.y;
+        float LastProcessBarValue = ProcessBar.value; //Сложности для того, чтобы когла шарик скачет,
+                                                      //полосочка не скакала вместе с ним
+        float Value = 1 - Ball.transform.position.y / _startPosition.y;;
+        if (LastProcessBarValue <= Value)
+            ProcessBar.value =  Value; 
+    }
+
+    private void AddLinks()
+    {
+        _active = Ball.GetComponent<Active>(); //верём ссылку на компонент актив у мячика
+    }
+
+    private void OnClickFunctions()
+    {
+        MenuButton.onClick.AddListener(_klickMenuButton); //некий синтаксис для нажатия по меню
+        PlayButton.onClick.AddListener(_klickPlayButton); //некий синтаксис для нажатия по кнопке плей
+    }
+
+    private void DisablingLayouts()
+    {
+        WinLayout.gameObject.SetActive(false); //отключаем все лэйауты
+        LoseLayout.gameObject.SetActive(false);
+        MenuButton.gameObject.SetActive(false);
     }
 }

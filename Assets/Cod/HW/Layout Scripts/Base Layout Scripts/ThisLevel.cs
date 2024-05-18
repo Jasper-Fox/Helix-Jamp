@@ -1,12 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
 
 public class ThisLevel : MonoBehaviour
 {
+    private const int FirstLevelNumber = 1;
     public GameObject Ball;
     public GameObject NextLevel;
     public Button MenuButton;
@@ -18,11 +17,8 @@ public class ThisLevel : MonoBehaviour
     
     void Start()
     {
-        _active = Ball.GetComponent<Active>();
-        _textLevelNumber = GetComponent<Text>();
-        _textNextLevelNumber = NextLevel.GetComponent<Text>();
-        _levelNumber = 1;
-        
+        AddLinks();
+        _levelNumber = FirstLevelNumber;
         MenuButton.onClick.AddListener(_klickMenuButton);  
     }
 
@@ -39,5 +35,12 @@ public class ThisLevel : MonoBehaviour
             _levelNumber++;
             _active._wasFinish = false;    
         }
+    }
+
+    private void AddLinks()
+    {
+        _active = Ball.GetComponent<Active>();
+        _textLevelNumber = GetComponent<Text>();
+        _textNextLevelNumber = NextLevel.GetComponent<Text>();
     }
 }

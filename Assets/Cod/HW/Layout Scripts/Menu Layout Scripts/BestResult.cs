@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +11,7 @@ public class BestResult : MonoBehaviour
 
     void Start() //Достаём актив из мяча и текст из этого объекта
     {
-        _platformСounter = Ball.GetComponent<Active>();
-        _record = GetComponent<Text>();
+        AddLinks();
     }
 
     void Update()
@@ -24,5 +22,11 @@ public class BestResult : MonoBehaviour
     private void _recordChecker()
     {
         _record.text = $"best: {_platformСounter._maxPassedPlatforms.ToString()}";
+    }
+
+    private void AddLinks()
+    {
+        _platformСounter = Ball.GetComponent<Active>();
+        _record = GetComponent<Text>();
     }
 }

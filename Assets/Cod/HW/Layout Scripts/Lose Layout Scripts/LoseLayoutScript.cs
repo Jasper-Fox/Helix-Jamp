@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,10 +16,7 @@ public class LoseLayoutScript : MonoBehaviour
 
     void Start()//Достаём всё отовсютду
     {
-        _active = Ball.GetComponent<Active>();
-        _newRecord = NewRecord.GetComponent<Text>();
-        _slider = ProcessBar.GetComponent<Slider>();
-        _completed = Completed.GetComponent<Text>();
+        AddLinks();
     }
 
     void Update()
@@ -48,5 +44,13 @@ public class LoseLayoutScript : MonoBehaviour
             NewRecord.gameObject.SetActive(false);
         }
 
+    }
+
+    private void AddLinks()
+    {
+        _active = Ball.GetComponent<Active>();
+        _newRecord = NewRecord.GetComponent<Text>();
+        _slider = ProcessBar.GetComponent<Slider>();
+        _completed = Completed.GetComponent<Text>();
     }
 }
